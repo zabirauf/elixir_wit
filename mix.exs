@@ -3,10 +3,12 @@ defmodule Wit.Mixfile do
 
   def project do
     [app: :elixir_wit,
-     version: "0.0.1",
+     version: "0.1.0",
      elixir: "~> 1.2",
+     description: description,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     package: package,
      deps: deps]
   end
 
@@ -14,7 +16,11 @@ defmodule Wit.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :httpotion]]
+  end
+
+  def description do
+    "Elixir client for the Wit API. Wit is the natural language engine for creating Bots."
   end
 
   # Dependencies can be Hex packages:
@@ -29,7 +35,20 @@ defmodule Wit.Mixfile do
   defp deps do
     [
       {:poison, "~> 2.0"},
-      {:httpoison, "~> 0.8.3"}
+      {:httpotion, "~> 2.2.0"},
+      {:uuid, "~> 1.1"},
+      {:inch_ex, ">= 0.0.0", only: :docs},
+
+      #Dev dependencies
+      {:dialyxir, "~> 0.3", only: [:dev]}
+    ]
+  end
+
+  defp package do
+    [
+      licenses: ["MIT License"],
+      maintainers: ["Zohaib Rauf"],
+      links: %{"Github" => "https://github.com/zabirauf/elixir_wit"}
     ]
   end
 end

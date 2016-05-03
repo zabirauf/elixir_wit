@@ -1,16 +1,20 @@
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/hyperium/hyper/master/LICENSE)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/hyperium/hyper/master/LICENSE) [![Build Status](https://travis-ci.org/zabirauf/elixir_wit.svg?branch=master)](https://travis-ci.org/zabirauf/elixir_wit) [![Inline docs](http://inch-ci.org/github/zabirauf/elixir_wit.svg)](http://inch-ci.org/github/zabirauf/elixir_wit) <a href="http://github.com/syl20bnr/spacemacs"><img src="https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg" alt="Made with Spacemacs"></a>
 
 # Wit
 Elixir client for the Wit API. Wit is the natural language engine for creating Bots.
 
+## Documentation
+
+API documentation is available at [https://hexdocs.pm/elixir_wit](https://hexdocs.pm/elixir_wit)
+
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+The package can be installed as:
 
   1. Add elixir_wit to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:elixir_wit, "~> 0.0.1"}]
+          [{:elixir_wit, "~> 0.1.0"}]
         end
 
 ## Usage

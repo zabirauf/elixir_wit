@@ -40,7 +40,8 @@ defmodule Wit.Mixfile do
       {:inch_ex, ">= 0.0.0", only: :docs},
 
       #Dev dependencies
-      {:dialyxir, "~> 0.3", only: [:dev]}
+      {:dialyxir, "~> 0.3", only: [:dev]},
+      {:ex_doc, "~> 0.11.5", only: [:dev]}
     ]
   end
 
@@ -48,7 +49,10 @@ defmodule Wit.Mixfile do
     [
       licenses: ["MIT License"],
       maintainers: ["Zohaib Rauf"],
-      links: %{"Github" => "https://github.com/zabirauf/elixir_wit"}
+      links: %{
+        "Github" => "https://github.com/zabirauf/elixir_wit",
+        "Docs" => "https://hexdocs.pm/elixir_wit/"
+      }
     ]
   end
 end

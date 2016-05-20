@@ -31,17 +31,15 @@ defmodule Wit.Client do
     HTTPotion.get(message_api, [headers: headers(access_token)])
   end
 
-  defp create_url(endpoint, %{} = get_params) do
+  def create_url(endpoint), do: create_url(endpoint, %{})
+  def create_url(endpoint, %{} = get_params) do
     Map.keys(get_params)
     |> Enum.reduce(endpoint, fn(key, url) ->
       append_to_url(url, key, Map.get(get_params, key))
     end)
   end
 
-  defp append_to_url(url, _key, ""), do: url
-  defp append_to_url(url, key, param), do: "#{url}&#{key}=#{param}"
-
-  defp headers(access_token) do
+  def headers(access_token) do
     [
       "Authorization": "Bearer #{access_token}",
       "Content-Type": "application/json",
@@ -49,6 +47,8 @@ defmodule Wit.Client do
     ]
   end
 
+  defp append_to_url(url, _key, ""), do: url
+  defp append_to_url(url, key, param), do: "#{url}&#{key}=#{param}"
 end
 
 defmodule Wit.Client.Deserializer do

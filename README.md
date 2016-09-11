@@ -13,9 +13,11 @@ The package can be installed as:
 
   1. Add elixir_wit to your list of dependencies in `mix.exs`:
 
-        def deps do
-          [{:elixir_wit, "~> 0.1.0"}]
-        end
+  ```elixir
+  def deps do
+    [{:elixir_wit, "~> 0.1.0"}]
+  end
+  ```
 
 ## Usage
 
@@ -24,7 +26,7 @@ To handle the different actions from the Wit.ai API you have to create a module 
 
 The custom actions can be created by `defaction` macro. It expected to have two parameters i.e. `session` which is the session id and the `context` which contains the context of the conversation. **The name of the custom action should match the one registered in Wit.**
 
-```
+```elixir
 defmodule WeatherActions do
   use Wit.Actions
 
@@ -50,11 +52,11 @@ end
 ### 2. Call the run action
 After you have create the action module you can call the Wit using the module which will keep on calling the wit `/converse` API until the API returns `stop`.
 
-```
+```elixir
 Wit.run_actions(access_token, session_id, WeatherActions, "What is the weather?")
 ```
 
-You can also use `interactive\4` which creates an interactive session with your model in Wit.
+You can also use `interactive/4` which creates an interactive session with your model in Wit.
 
 ## Low Level APIs
 The client also provides the functions to call the low level `message` and `converse` API.

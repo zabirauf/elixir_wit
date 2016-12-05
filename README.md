@@ -14,7 +14,7 @@ The package can be installed as:
   1. Add elixir_wit to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:elixir_wit, "~> 0.1.0"}]
+          [{:elixir_wit, "~> 0.2.0"}]
         end
 
 ## Usage

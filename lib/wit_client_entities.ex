@@ -1,6 +1,6 @@
 defmodule Wit.Client.Entities do
   require Logger
-  import Wit.Client, only: [create_url: 2, create_url: 1, headers: 1]
+  import Wit.Client, only: [create_url: 1, headers: 1]
 
   @endpoint "https://api.wit.ai"
   @version "20160330"

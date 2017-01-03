@@ -24,7 +24,7 @@ The package can be installed as:
 ### 1. Create action module
 To handle the different actions from the Wit.ai API you have to create a module that implements the default callbacks and also custom actions if you have any.
 
-The custom actions can be created by `defaction` macro. It expected to have two parameters i.e. `session` which is the session id and the `context` which contains the context of the conversation. **The name of the custom action should match the one registered in Wit.**
+The custom actions can be created by `defaction` macro. It expected to have three parameters i.e. `session` which is the session id, the `context` which contains the context of the conversation and `message` which is the raw message sent from Wit. **The name of the custom action should match the one registered in Wit.**
 
 ```elixir
 defmodule WeatherActions do
@@ -42,7 +42,7 @@ defmodule WeatherActions do
     # Handle error
   end
 
-  defaction fetch_weather(session, context) do
+  defaction fetch_weather(session, context, message) do
     context # Return the updated context
   end
 end

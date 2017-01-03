@@ -97,7 +97,7 @@ defmodule Wit do
 
   defp run_action(access_token, session_id, module, context, %Converse{type: "action"} = resp, max_steps) do
     Logger.debug "Got converse type \"action\""
-    context = apply(module, :call_action, [resp.action, session_id, context])
+    context = apply(module, :call_action, [resp.action, session_id, context, resp])
     run_actions(access_token, session_id, module, "", context, max_steps)
   end
 

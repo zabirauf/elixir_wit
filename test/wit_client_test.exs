@@ -17,7 +17,7 @@ defmodule WitClientTest do
     {:ok, converse} = (resp |> Wit.Client.Deserializer.deserialize_converse)
     Logger.info inspect(converse)
 
-    assert 1 == converse.confidence
+    assert converse.confidence > 0
     assert "merge" == converse.type
   end
 

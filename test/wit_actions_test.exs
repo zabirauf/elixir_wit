@@ -8,7 +8,7 @@ defmodule WitActionsTest do
   test "The custom action creation using defaction macro" do
 
     quoted_func = quote do
-      defaction fetch_weather(session, context) do
+      defaction fetch_weather(session, context, message) do
         Logger.info "Fetching weather"
         assert true
         context
@@ -18,13 +18,13 @@ defmodule WitActionsTest do
     module_code = create_custom_action(quoted_func)
     Code.eval_quoted(module_code)
 
-    CustomActions.call_action("fetch_weather", nil, nil)
+    CustomActions.call_action("fetch_weather", nil, nil, nil)
   end
 
   test "Calling Say action" do
 
     quoted_func = quote do
-      defaction fetch_weather(session, context) do
+      defaction fetch_weather(session, context, message) do
         Logger.info "Fetching weather"
         assert false
         context
@@ -67,17 +67,25 @@ defmodule WitActionsTest do
         Logger.info inspect(context)
       end
 
-      defaction fetch_weather(_session, context) do
+      defaction fetch_weather(_session, context, message) do
         Logger.info "Fetch weather..."
         Logger.info inspect(context)
+        Logger.info inspect(message)
 
-        Map.put(context, "forecast", "Sunny")
+        Map.put(context, "temperature", "10")
+      end
+
+      defaction story_ended(_session, context, message) do
+        Logger.info "Story ended..."
+        Logger.info inspect(message)
+        Logger.info inspect(context)
+
+        context
       end
     end
 
     session_id = UUID.uuid1()
-    assert {:ok, context}= Wit.run_actions(@access_token, session_id, CustomActions, "What is the weather?")
-    assert {:ok, _} = Wit.run_actions(@access_token, session_id, CustomActions, "Seattle", context, 10)
+    assert {:ok, context}= Wit.run_actions(@access_token, session_id, CustomActions, "What is the weather in Seattle?", %{}, 10)
   end
 
   @tag disabled: true
@@ -109,11 +117,20 @@ defmodule WitActionsTest do
         Logger.info inspect(context)
       end
 
-      defaction fetch_weather(_session, context) do
+      defaction fetch_weather(_session, context, message) do
         Logger.info "Fetch weather..."
+        Logger.info inspect(message)
         Logger.info inspect(context)
 
-        Map.put(context, "forecast", "Sunny")
+        Map.put(context, "temperature", "80")
+      end
+
+      defaction story_ended(_session, context, message) do
+        Logger.info "Story ended..."
+        Logger.info inspect(message)
+        Logger.info inspect(context)
+
+        context
       end
     end
 

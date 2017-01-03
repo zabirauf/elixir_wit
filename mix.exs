@@ -3,7 +3,7 @@ defmodule Wit.Mixfile do
 
   def project do
     [app: :elixir_wit,
-     version: "0.2.0",
+     version: "1.0.0",
      elixir: "~> 1.2",
      description: description,
      build_embedded: Mix.env == :prod,

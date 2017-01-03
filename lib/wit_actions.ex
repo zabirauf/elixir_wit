@@ -22,7 +22,7 @@ defmodule Wit.Actions do
           # Handle error
         end
 
-        defaction fetch_weather(session, context) do
+        defaction fetch_weather(session, context, message) do
           context # Return the updated context
         end
       end
@@ -46,7 +46,7 @@ defmodule Wit.Actions do
 
   ## Examples
 
-      defaction fetch_weather(session, context) do
+      defaction fetch_weather(session, context, message) do
         # Fetch weather
         context # Return the updated context
       end
@@ -55,8 +55,8 @@ defmodule Wit.Actions do
     {func_name, arg_list} = Macro.decompose_call(head)
 
     # Throw error if the argument list is not equal to 3
-    if length(arg_list) != 2 do
-      raise ArgumentError, message: "Wit action should have three arguments i.e. session, context"
+    if length(arg_list) != 3 do
+      raise ArgumentError, message: "Wit action should have three arguments i.e. session, context and message"
     end
 
     quote do
@@ -78,19 +78,19 @@ defmodule Wit.Actions do
         call_action(action, [session, context, message])
       end
 
-      def call_action(action, session, context) do
-        call_action(action, [session, context])
+      def call_action(action, session, context, message) do
+        call_action(action, [session, context, message])
       end
 
       defp call_action(action, arg_list) do
         wit_actions = @wit_actions
         func = Map.get(wit_actions, action)
 
-        apply_action(func, arg_list)
+        apply_action(action, func, arg_list)
       end
 
-      defp apply_action(nil, _arg_list), do: {:error, "No action found"}
-      defp apply_action(func, arg_list), do: apply(__MODULE__, func, arg_list)
+      defp apply_action(action, nil, _arg_list), do: {:error, "No action '#{action}' found"}
+      defp apply_action(_action, func, arg_list), do: apply(__MODULE__, func, arg_list)
 
     end
   end

@@ -3,8 +3,8 @@ defmodule Wit.Models.Response.Converse do
   The response for the /converse WIT API
   """
 
-  @type t :: %{type: String.t, msg: String.t, action: any, entities: [map()], confidence: float}
-  defstruct type: "", msg: nil, action: nil, entities: [], confidence: 0
+  @type t :: %{type: String.t, msg: String.t, action: any, entities: map(), confidence: float}
+  defstruct type: "", msg: nil, action: nil, entities: %{}, confidence: 0
 end
 
 defmodule Wit.Models.Response.Outcome do
@@ -12,8 +12,8 @@ defmodule Wit.Models.Response.Outcome do
   The outcomes contained in the response of the /message WIT API
   """
 
-  @type t :: %{_text: String.t, intent: String.t, entities: [map()], confidence: float}
-  defstruct _text: "", intent: "", entities: [], confidence: 0
+  @type t :: %{_text: String.t, intent: String.t, entities: map(), confidence: float}
+  defstruct _text: "", intent: "", entities: %{}, confidence: 0
 end
 
 defmodule Wit.Models.Response.Message do

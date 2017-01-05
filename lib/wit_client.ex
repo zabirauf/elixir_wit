@@ -74,10 +74,7 @@ defmodule Wit.Client.Deserializer do
   """
   @spec deserialize_message(map) :: {:ok, map} | {:error, String.t, map}
   def deserialize_message(%HTTPotion.Response{status_code: 200} = resp) do
-    message = Poison.decode!(resp.body, as: %Wit.Models.Response.Message{})
-    outcomes = Enum.map(message.outcomes, &(struct(Wit.Models.Response.Outcome, &1)))
-
-    {:ok, Map.update(message, :outcomes, outcomes)}
+    {:ok, Poison.decode!(resp.body, as: %Wit.Models.Response.Message{outcomes: [%Wit.Models.Response.Outcome{}]})}
   end
   def deserialize_message(%HTTPotion.Response{status_code: code} = resp) do
     Logger.debug inspect(resp)

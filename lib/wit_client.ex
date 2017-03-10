@@ -6,13 +6,11 @@ defmodule Wit.Client do
 
   @api_converse "#{@endpoint}/converse"
   def converse(access_token, session_id, text \\ "", context \\ %{}, version \\ @version) do
-    get_params = %{"v" => version, "session_id" => session_id, "q" => URI.encode(text)}
+    context_stringified = context |> Poison.encode! |> URI.encode
+    get_params = %{"v" => version, "session_id" => session_id, "q" => URI.encode(text), "context" => context_stringified}
     converse_api = create_url("#{@api_converse}?", get_params)
 
-    body_stringified = Poison.encode!(context)
-    Logger.debug "Calling API #{converse_api} \n #{body_stringified}"
-
-    HTTPotion.post(converse_api, [body: body_stringified, headers: headers(access_token)])
+    HTTPotion.post(converse_api, [headers: headers(access_token)])
   end
 
   @api_message "#{@endpoint}/message"

@@ -7,15 +7,6 @@ defmodule Wit.Models.Response.Converse do
   defstruct type: "", msg: nil, action: nil, entities: %{}, confidence: 0
 end
 
-defmodule Wit.Models.Response.Outcome do
-  @moduledoc """
-  The outcomes contained in the response of the /message WIT API
-  """
-
-  @type t :: %{_text: String.t, intent: String.t, entities: map(), confidence: float}
-  defstruct _text: "", intent: "", entities: %{}, confidence: 0
-end
-
 defmodule Wit.Models.Response.Message do
   @moduledoc """
   The response for the /message WIT API

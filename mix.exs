@@ -3,8 +3,8 @@ defmodule Wit.Mixfile do
 
   def project do
     [app: :elixir_wit,
-     version: "1.0.0",
-     elixir: "~> 1.2",
+     version: "2.0.0",
+     elixir: "~> 1.4",
      description: description,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -41,7 +41,8 @@ defmodule Wit.Mixfile do
 
       #Dev dependencies
       {:dialyxir, "~> 0.3", only: [:dev]},
-      {:ex_doc, "~> 0.11.5", only: [:dev]}
+      {:ex_doc, "~> 0.11.5", only: [:dev]},
+      {:timex, "~> 3.1", only: [:test]}
     ]
   end
 

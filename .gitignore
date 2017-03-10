@@ -5,3 +5,5 @@
 erl_crash.dump
 Elixir.Wit.beam
 *.ez
+config/test.secret.exs
+config/dev.secret.exs

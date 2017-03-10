@@ -7,12 +7,24 @@ defmodule WitClientTest do
   alias Wit.Models.Response.Message
   alias Wit.Models.Response.Outcome
 
-  @access_token ""
+  setup do
+    access_token = Application.get_env(:elixir_wit, :wit_credentials)[:server_access_token]
+    {:ok, access_token: access_token}
+  end
 
-  test "Call converse api" do
+  test "Call message api", %{access_token: access_token} do
+    timezone = "America/Los_Angeles"
+    {:ok, resp} = Wit.Client.message(access_token, "What is the weather in Seattle tomorrow", "", "", %{timezone: timezone}) |> Wit.Client.Deserializer.deserialize_message
+
+    dt = resp.entities["datetime"] |> Enum.at(0) |> Map.get("value") |> Timex.parse!("{ISO:Extended}")
+
+    # Ends with either -07:00 or -08:00 for Los Angeles timezone (depending on DST and current time of year)
+    assert Regex.match?(~r/-0[78]:00$/, DateTime.to_iso8601(dt))
+  end
+
+  test "Call converse api", %{access_token: access_token} do
     session_id = UUID.uuid1()
-    resp = Wit.Client.converse(@access_token, session_id, "What is the weather in Seattle", %{})
-    Logger.info inspect(resp)
+    resp = Wit.Client.converse(access_token, session_id, "What is the weather in Seattle", %{})
 
     {:ok, converse} = (resp |> Wit.Client.Deserializer.deserialize_converse)
     Logger.info inspect(converse)

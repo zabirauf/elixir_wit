@@ -21,8 +21,6 @@ defmodule Wit.Models.Response.Message do
   The response for the /message WIT API
   """
 
-  alias Wit.Models.Response.Outcome
-
-  @type t :: %{msg_id: String.t, _text: String.t, outcomes: [Outcome.t]}
-  defstruct msg_id: "", _text: "", outcomes: []
+  @type t :: %{msg_id: String.t, _text: String.t, entities: map()}
+  defstruct msg_id: "", _text: "", entities: %{}
 end

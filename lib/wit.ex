@@ -14,10 +14,10 @@ defmodule Wit do
   @doc """
   Calls the /message API
   """
-  @spec message(String.t, String.t, map, String.t, String.t, integer) :: {:ok, Message.t} | {:error, String.t, map}
-  def message(access_token, text, context \\ %{}, thread_id \\ "", msg_id \\ "", total_outcomes \\ 1) do
+  @spec message(String.t, String.t, map, String.t, String.t) :: {:ok, Message.t} | {:error, String.t, map}
+  def message(access_token, text, context \\ %{}, thread_id \\ "", msg_id \\ "") do
 
-    Client.message(access_token, text, thread_id, msg_id, context, total_outcomes)
+    Client.message(access_token, text, thread_id, msg_id, context)
     |> Deserializer.deserialize_message
   end
 

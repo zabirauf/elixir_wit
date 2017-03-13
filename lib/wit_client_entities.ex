@@ -3,7 +3,6 @@ defmodule Wit.Client.Entities do
   import Wit.Client, only: [create_url: 1, headers: 1]
 
   @endpoint "https://api.wit.ai"
-  @version "20160526"
   @api_entities "#{@endpoint}/entities"
 
   @type response_type :: {:ok, map} | {:error, String.t, map}

@@ -15,7 +15,7 @@ The package can be installed as:
 
   ```elixir
   def deps do
-    [{:elixir_wit, "~> 1.0.0"}]
+    [{:elixir_wit, "~> 2.0.0"}]
   end
   ```
 

@@ -30,3 +30,5 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 config :logger, level: :warn
+
+import_config "#{Mix.env}.exs"

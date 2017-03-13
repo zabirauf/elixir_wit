@@ -3,7 +3,10 @@ defmodule WitActionsTest do
   require Logger
   doctest Wit.Actions
 
-  @access_token ""
+  setup do
+    access_token = Application.get_env(:elixir_wit, :wit_credentials)[:server_access_token]
+    {:ok, access_token: access_token}
+  end
 
   test "The custom action creation using defaction macro" do
 
@@ -37,7 +40,7 @@ defmodule WitActionsTest do
     CustomActions.call_action("say", nil, nil, nil)
   end
 
-  test "Running action" do
+  test "Running action", %{access_token: access_token} do
 
     defmodule CustomActions do
       use Wit.Actions
@@ -54,9 +57,9 @@ defmodule WitActionsTest do
         Logger.info inspect(message)
         Logger.info inspect(context)
 
-        if(Map.has_key?(message.entities, "location")) do
+        context = if(Map.has_key?(message.entities, "location")) do
           [location | _] = message.entities["location"]
-          context = Map.put(context, "loc", location["value"])
+          Map.put(context, "loc", location["value"])
         end
 
         context
@@ -85,11 +88,11 @@ defmodule WitActionsTest do
     end
 
     session_id = UUID.uuid1()
-    assert {:ok, context}= Wit.run_actions(@access_token, session_id, CustomActions, "What is the weather in Seattle?", %{}, 10)
+    assert {:ok, _context}= Wit.run_actions(access_token, session_id, CustomActions, "What is the weather in Seattle?", %{}, 10)
   end
 
   @tag disabled: true
-  test "Running interactive" do
+  test "Running interactive", %{access_token: access_token} do
 
     defmodule CustomActions do
       use Wit.Actions
@@ -135,7 +138,7 @@ defmodule WitActionsTest do
     end
 
     session_id = UUID.uuid1()
-    assert {:ok, context}= Wit.interactive(@access_token, session_id, CustomActions)
+    assert {:ok, _context}= Wit.interactive(access_token, session_id, CustomActions)
   end
 
 

@@ -1,6 +1,13 @@
 Changelog
 =============
 
+# 2.0.0
+* Update to Elixir 1.4
+* Update to Wit API 20160526
+* Refactor tests to load Wit access token from Mix config
+* Backward incompatible changes
+    - Remove the `outcomes` from `message` responses and replace with `entities`
+
 # 1.0.0
 
 * Backward incompatible changes

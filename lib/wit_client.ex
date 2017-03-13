@@ -2,28 +2,25 @@ defmodule Wit.Client do
   require Logger
 
   @endpoint "https://api.wit.ai"
-  @version "20160330"
+  @version "20160526"
 
   @api_converse "#{@endpoint}/converse"
   def converse(access_token, session_id, text \\ "", context \\ %{}, version \\ @version) do
-    get_params = %{"v" => version, "session_id" => session_id, "q" => URI.encode(text)}
+    context_stringified = context |> Poison.encode! |> URI.encode
+    get_params = %{"v" => version, "session_id" => session_id, "q" => URI.encode(text), "context" => context_stringified}
     converse_api = create_url("#{@api_converse}?", get_params)
 
-    body_stringified = Poison.encode!(context)
-    Logger.debug "Calling API #{converse_api} \n #{body_stringified}"
-
-    HTTPotion.post(converse_api, [body: body_stringified, headers: headers(access_token)])
+    HTTPotion.post(converse_api, [headers: headers(access_token)])
   end
 
   @api_message "#{@endpoint}/message"
-  def message(access_token, text, thread_id \\ "", msg_id \\ "", context \\ %{}, total_outcomes \\ 1, version \\ @version) do
+  def message(access_token, text, thread_id \\ "", msg_id \\ "", context \\ %{}, version \\ @version) do
     context_stringified = context |> Poison.encode! |> URI.encode
     get_params = %{
       "v" => version,
       "q" => URI.encode(text),
       "thread_id" => thread_id,
       "msg_id" => msg_id,
-      "n" => total_outcomes,
       "context" => context_stringified
     }
 
@@ -74,10 +71,7 @@ defmodule Wit.Client.Deserializer do
   """
   @spec deserialize_message(map) :: {:ok, map} | {:error, String.t, map}
   def deserialize_message(%HTTPotion.Response{status_code: 200} = resp) do
-    message = Poison.decode!(resp.body, as: %Wit.Models.Response.Message{})
-    outcomes = Enum.map(message.outcomes, &(struct(Wit.Models.Response.Outcome, &1)))
-
-    {:ok, Map.update(message, :outcomes, outcomes)}
+    {:ok, Poison.decode!(resp.body, as: %Wit.Models.Response.Message{})}
   end
   def deserialize_message(%HTTPotion.Response{status_code: code} = resp) do
     Logger.debug inspect(resp)

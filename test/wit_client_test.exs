@@ -1,11 +1,5 @@
 defmodule WitClientTest do
   use ExUnit.Case
-  require Logger
-
-  alias Wit.Models.Context
-  alias Wit.Models.Response.Converse
-  alias Wit.Models.Response.Message
-  alias Wit.Models.Response.Outcome
 
   setup do
     access_token = Application.get_env(:elixir_wit, :wit_credentials)[:server_access_token]

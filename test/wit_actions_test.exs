@@ -8,7 +8,7 @@ defmodule WitActionsTest do
     {:ok, access_token: access_token}
   end
 
-  test "The custom action creation using defaction macro", %{access_token: access_token} do
+  test "The custom action creation using defaction macro" do
 
     quoted_func = quote do
       defaction fetch_weather(session, context, message) do
@@ -24,7 +24,7 @@ defmodule WitActionsTest do
     CustomActions.call_action("fetch_weather", nil, nil, nil)
   end
 
-  test "Calling Say action", %{access_token: access_token} do
+  test "Calling Say action" do
 
     quoted_func = quote do
       defaction fetch_weather(session, context, message) do
@@ -57,9 +57,9 @@ defmodule WitActionsTest do
         Logger.info inspect(message)
         Logger.info inspect(context)
 
-        if(Map.has_key?(message.entities, "location")) do
+        context = if(Map.has_key?(message.entities, "location")) do
           [location | _] = message.entities["location"]
-          context = Map.put(context, "loc", location["value"])
+          Map.put(context, "loc", location["value"])
         end
 
         context
@@ -88,7 +88,7 @@ defmodule WitActionsTest do
     end
 
     session_id = UUID.uuid1()
-    assert {:ok, context}= Wit.run_actions(access_token, session_id, CustomActions, "What is the weather in Seattle?", %{}, 10)
+    assert {:ok, _context}= Wit.run_actions(access_token, session_id, CustomActions, "What is the weather in Seattle?", %{}, 10)
   end
 
   @tag disabled: true
@@ -138,7 +138,7 @@ defmodule WitActionsTest do
     end
 
     session_id = UUID.uuid1()
-    assert {:ok, context}= Wit.interactive(access_token, session_id, CustomActions)
+    assert {:ok, _context}= Wit.interactive(access_token, session_id, CustomActions)
   end
 
 

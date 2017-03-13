@@ -5,11 +5,11 @@ defmodule Wit.Mixfile do
     [app: :elixir_wit,
      version: "2.0.0",
      elixir: "~> 1.4",
-     description: description,
+     description: description(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     package: package,
-     deps: deps]
+     package: package(),
+     deps: deps()]
   end
 
   # Configuration for the OTP application
@@ -49,7 +49,7 @@ defmodule Wit.Mixfile do
   defp package do
     [
       licenses: ["MIT License"],
-      maintainers: ["Zohaib Rauf"],
+      maintainers: ["Zohaib Rauf", "Micah Wedemeyer"],
       links: %{
         "Github" => "https://github.com/zabirauf/elixir_wit",
         "Docs" => "https://hexdocs.pm/elixir_wit/"

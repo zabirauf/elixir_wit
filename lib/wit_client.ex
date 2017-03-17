@@ -61,6 +61,9 @@ defmodule Wit.Client.Deserializer do
   def deserialize_converse(%HTTPotion.Response{status_code: 200} = resp) do
     {:ok, Poison.decode!(resp.body, as: %Wit.Models.Response.Converse{})}
   end
+  def deserialize_converse(%HTTPotion.ErrorResponse{message: message} = resp) do
+    {:error, message, resp}
+  end
   def deserialize_converse(%HTTPotion.Response{status_code: code} = resp) do
     Logger.debug inspect(resp)
     {:error, "Invalid status code #{code}", resp}
@@ -72,6 +75,9 @@ defmodule Wit.Client.Deserializer do
   @spec deserialize_message(map) :: {:ok, map} | {:error, String.t, map}
   def deserialize_message(%HTTPotion.Response{status_code: 200} = resp) do
     {:ok, Poison.decode!(resp.body, as: %Wit.Models.Response.Message{})}
+  end
+  def deserialize_message(%HTTPotion.ErrorResponse{message: message} = resp) do
+    {:error, message, resp}
   end
   def deserialize_message(%HTTPotion.Response{status_code: code} = resp) do
     Logger.debug inspect(resp)

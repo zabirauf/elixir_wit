@@ -3,7 +3,7 @@ defmodule Wit.Mixfile do
 
   def project do
     [app: :elixir_wit,
-     version: "2.0.0",
+     version: "2.0.1",
      elixir: "~> 1.4",
      description: description(),
      build_embedded: Mix.env == :prod,
@@ -36,7 +36,7 @@ defmodule Wit.Mixfile do
     [
       {:poison, "~> 3.0"},
       {:httpotion, "~> 3.0.0"},
-      {:uuid, "~> 1.1"},
+      {:elixir_uuid, "~> 1.2"},
       {:inch_ex, ">= 0.0.0", only: :docs},
 
       #Dev dependencies

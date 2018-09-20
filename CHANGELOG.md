@@ -1,6 +1,9 @@
 Changelog
 =============
 
+# 2.0.1
+* Update the `:uuid` package to its newest version now referenced as `:elixir_uuid`
+
 # 2.0.0
 * Update to Elixir 1.4
 * Update to Wit API 20160526
